@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
 
 function App() {
+  const [inputValue, setInputValue] = React.useState("");
+  const [names, setNames] = React.useState([]);
+
+  function handleChange(event) {
+    setInputValue(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setNames([...names, inputValue]);
+    setInputValue("");
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{inputValue}</h1>
+      <div className="container">
+        <form onClick={handleSubmit}>
+          <input
+            name="name"
+            type="text"
+            placeholder="name"
+            value={inputValue}
+            onChange={handleChange}
+          />
+          <button>Enter</button>
+        </form>
+        <h2> Names </h2>
+        <ul className="name-list">
+          {names.map((name, index) => (
+            <li key={index}> {name}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
